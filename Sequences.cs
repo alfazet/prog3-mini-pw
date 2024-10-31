@@ -6,7 +6,7 @@ using static Lab08.SequenceHelpers;
 
 namespace Lab08
 {
-	interface ISequence : IEnumerable
+	public interface ISequence : IEnumerable
 	{
 		string Name { get; }
 	}
@@ -210,6 +210,7 @@ namespace Lab08
         {
             return new FibonacciSequenceEnumerator();
         }
+
         public override string ToString()
         {
             var sb = new StringBuilder("[");
@@ -219,6 +220,69 @@ namespace Lab08
             }
             sb.Append("...]");
             return sb.ToString();
+        }
+    }
+
+    class SinusSequenceEnumerator : IEnumerator
+    {
+        decimal _x, _cur_x, _cur;
+        int _cur_fact, _cur_sign, _cur_k;
+
+        public SinusSequenceEnumerator(decimal x)
+        {
+            _x = x;
+            _cur = 0;
+            _cur_x = _x;
+            _cur_fact = 1;
+            _cur_sign = -1;
+            _cur_k = -1;
+        }
+
+        object IEnumerator.Current
+        {
+            get
+            {
+                return _cur;
+            }
+        }
+
+        public bool MoveNext()
+        {
+            _cur_k += 2;
+            _cur_sign *= -1;
+            _cur_x *= _x * _x;
+            _cur_fact *= _cur_k;
+            if (_cur_k != 1)
+            {
+                _cur_fact *= (_cur_k - 1);
+            }
+            _cur += _cur_sign * _cur_x / _cur_fact;
+
+            return true;
+        }
+
+        void IEnumerator.Reset()
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class Sinus : ISequence
+    {
+        decimal _x;
+        public string Name
+        {
+            get
+            {
+                return "Sinus";
+            }
+        }
+
+        public Sinus(decimal x) { _x = x; }
+
+        public IEnumerator GetEnumerator()
+        {
+            return new SinusSequenceEnumerator(_x);
         }
     }
 

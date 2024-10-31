@@ -1,7 +1,7 @@
 ﻿#define PART_1
 #define PART_2
-//#define PART_3
-//#define PART_4
+#define PART_3
+#define PART_4
 
 using static Lab08.SequenceHelpers;
 
@@ -49,7 +49,7 @@ namespace Lab08
 			seqList.Add(new ValueSequence(new int[] { }, true));
 #endif
 #if PART_3
-			seqList.Add(new Exp(1));
+			// seqList.Add(new Exp(1));
 			seqList.Add(new Sinus(1));
 #endif
             foreach (var seq in seqList)
